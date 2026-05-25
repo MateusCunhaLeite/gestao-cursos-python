@@ -1,25 +1,21 @@
 # gerenciador.py
+# Camada de lógica e persistência de dados do sistema E-Learning.
+# Realiza a conexão com o banco de dados MySQL via XAMPP usando PyMySQL.
+
 import pymysql
 
 class GerenciadorPlataforma:
     def __init__(self, host="localhost", user="root", password="", database="plataforma_cursos"):
-        # Dicionário (Estrutura Linear) para guardar as configurações de conexão
+        # Dicionário com as configurações de conexão ao banco de dados
         self.config = {
             'host': host,
             'user': user,
             'password': password,
             'database': database
         }
-        
-        # Dicionário simulando Módulos/Avaliações para complementar o requisito
-        self.modulos_padrao = {
-            "Modulo 1": "Introdução",
-            "Modulo 2": "Desenvolvimento",
-            "Modulo 3": "Avaliação Final"
-        }
-    
+
     def conectar(self):
-        """Estabelece e retorna a conexão com o banco MySQL."""
+        """Estabelece e retorna uma conexão com o banco MySQL."""
         return pymysql.connect(**self.config)
 
     # ==========================
@@ -30,26 +26,21 @@ class GerenciadorPlataforma:
         """(CREATE) Insere um novo curso no banco de dados."""
         conexao = self.conectar()
         cursor = conexao.cursor()
-        sql = "INSERT INTO cursos (nome, categoria, carga_horaria) VALUES (%s, %s, %s)"
-        
-        # Tupla (Estrutura Linear) para passar os valores da query
-        valores = (nome, categoria, carga_horaria)
-        
-        cursor.execute(sql, valores)
+        # Tupla com os valores a serem inseridos (evita SQL Injection)
+        cursor.execute(
+            "INSERT INTO cursos (nome, categoria, carga_horaria) VALUES (%s, %s, %s)",
+            (nome, categoria, carga_horaria)
+        )
         conexao.commit()
-        
         cursor.close()
         conexao.close()
 
     def listar_cursos(self):
-        """(READ) Retorna uma lista de tuplas com os cursos."""
+        """(READ) Retorna uma Lista de Tuplas com todos os cursos."""
         conexao = self.conectar()
         cursor = conexao.cursor()
         cursor.execute("SELECT * FROM cursos")
-        
-        # Retorna uma Lista de Tuplas (Estruturas Lineares)
-        resultados = cursor.fetchall() 
-        
+        resultados = cursor.fetchall()  # Lista de Tuplas retornada pelo banco
         cursor.close()
         conexao.close()
         return resultados
@@ -58,20 +49,77 @@ class GerenciadorPlataforma:
         """(DELETE) Remove um curso pelo seu ID."""
         conexao = self.conectar()
         cursor = conexao.cursor()
-        sql = "DELETE FROM cursos WHERE id = %s"
-        
-        # Tupla com um único elemento
-        valores = (id_curso,)
-        
-        cursor.execute(sql, valores)
+        cursor.execute("DELETE FROM cursos WHERE id = %s", (id_curso,))
         conexao.commit()
-        
         cursor.close()
         conexao.close()
-        
-    def obter_modulos_texto(self):
-        """Retorna os módulos formatados a partir do Dicionário."""
-        texto = ""
-        for modulo, descricao in self.modulos_padrao.items():
-            texto += f"{modulo}: {descricao}\n"
-        return texto
+
+    # ==========================
+    # C R U D - Entidade ALUNOS
+    # ==========================
+
+    def cadastrar_aluno(self, nome, email, curso_id):
+        """(CREATE) Insere um novo aluno no banco de dados."""
+        conexao = self.conectar()
+        cursor = conexao.cursor()
+        cursor.execute(
+            "INSERT INTO alunos (nome, email, curso_id) VALUES (%s, %s, %s)",
+            (nome, email, curso_id)
+        )
+        conexao.commit()
+        cursor.close()
+        conexao.close()
+
+    def listar_alunos(self):
+        """(READ) Retorna uma Lista de Tuplas com todos os alunos."""
+        conexao = self.conectar()
+        cursor = conexao.cursor()
+        cursor.execute("SELECT * FROM alunos")
+        resultados = cursor.fetchall()
+        cursor.close()
+        conexao.close()
+        return resultados
+
+    def deletar_aluno(self, id_aluno):
+        """(DELETE) Remove um aluno pelo seu ID."""
+        conexao = self.conectar()
+        cursor = conexao.cursor()
+        cursor.execute("DELETE FROM alunos WHERE id = %s", (id_aluno,))
+        conexao.commit()
+        cursor.close()
+        conexao.close()
+
+    # ==============================
+    # C R U D - Entidade PROFESSORES
+    # ==============================
+
+    def cadastrar_professor(self, nome, especialidade, email):
+        """(CREATE) Insere um novo professor no banco de dados."""
+        conexao = self.conectar()
+        cursor = conexao.cursor()
+        cursor.execute(
+            "INSERT INTO professores (nome, especialidade, email) VALUES (%s, %s, %s)",
+            (nome, especialidade, email)
+        )
+        conexao.commit()
+        cursor.close()
+        conexao.close()
+
+    def listar_professores(self):
+        """(READ) Retorna uma Lista de Tuplas com todos os professores."""
+        conexao = self.conectar()
+        cursor = conexao.cursor()
+        cursor.execute("SELECT * FROM professores")
+        resultados = cursor.fetchall()
+        cursor.close()
+        conexao.close()
+        return resultados
+
+    def deletar_professor(self, id_professor):
+        """(DELETE) Remove um professor pelo seu ID."""
+        conexao = self.conectar()
+        cursor = conexao.cursor()
+        cursor.execute("DELETE FROM professores WHERE id = %s", (id_professor,))
+        conexao.commit()
+        cursor.close()
+        conexao.close()
