@@ -31,9 +31,6 @@ Siga o passo a passo abaixo para preparar o ambiente e rodar o projeto no seu co
 3. Abra o seu navegador de internet e acesse: `http://localhost/phpmyadmin/`.
 4. Clique na aba **"SQL"** no menu superior, cole o script abaixo e clique em **Executar**:
 
-
-4. Clique na aba **"SQL"** no menu superior, cole o script abaixo e clique em **Executar**:
-
 ```sql
 -- 1. LIMPEZA E CRIAÇÃO DO BANCO DE DADOS
 DROP DATABASE IF EXISTS plataforma_cursos;
