@@ -31,12 +31,62 @@ Siga o passo a passo abaixo para preparar o ambiente e rodar o projeto no seu co
 3. Abra o seu navegador de internet e acesse: `http://localhost/phpmyadmin/`.
 4. Clique na aba **"SQL"** no menu superior, cole o script abaixo e clique em **Executar**:
    ```sql
-   CREATE DATABASE plataforma_cursos;
-   USE plataforma_cursos;
+   -- =======================================================
+-- 1. LIMPEZA E CRIAÇÃO DO BANCO DE DADOS
+-- =======================================================
+DROP DATABASE IF EXISTS plataforma_cursos;
+CREATE DATABASE plataforma_cursos;
+USE plataforma_cursos;
 
-   CREATE TABLE cursos (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       nome VARCHAR(100) NOT NULL,
-       categoria VARCHAR(50) NOT NULL,
-       carga_horaria INT NOT NULL
-   );
+-- =======================================================
+-- 2. CRIAÇÃO DAS TABELAS
+-- =======================================================
+
+-- Tabela de Cursos (Independente)
+CREATE TABLE cursos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    categoria VARCHAR(50) NOT NULL,
+    carga_horaria INT NOT NULL
+);
+
+-- Tabela de Professores (Independente)
+CREATE TABLE professores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    especialidade VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
+
+-- Tabela de Alunos (Depende da tabela de Cursos)
+CREATE TABLE alunos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    curso_id INT,
+    FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE SET NULL
+);
+
+-- =======================================================
+-- 3. INSERÇÃO DE DADOS (INSERTS DE TESTE)
+-- =======================================================
+
+-- Inserindo Cursos
+INSERT INTO cursos (nome, categoria, carga_horaria) VALUES 
+('Desenvolvimento Web Completo', 'Programação', 120),
+('Introdução à Ciência de Dados', 'Dados', 80),
+('Design de Interface (UI/UX)', 'Design', 60);
+
+-- Inserindo Professores
+INSERT INTO professores (nome, especialidade, email) VALUES 
+('Alex Silva', 'JavaScript e Node.js', 'alex.silva@email.com'),
+('Beatriz Souza', 'Python e Machine Learning', 'beatriz.souza@email.com'),
+('Carlos Ortega', 'Figma e Prototipagem', 'carlos.ortega@email.com');
+
+-- Inserindo Alunos
+INSERT INTO alunos (nome, email, curso_id) VALUES 
+('Lucas Souza', 'lucas.souza@email.com', 1),
+('Mariana Costa', 'mariana.costa@email.com', 2),
+('Gabriel Ramos', 'gabriel.ramos@email.com', 1),
+('Amanda Lima', 'amanda.lima@email.com', 3),
+('Roberto Alves', 'roberto.alves@email.com', NULL);
