@@ -30,11 +30,11 @@ Siga o passo a passo abaixo para preparar o ambiente e rodar o projeto no seu co
 2. Abra o **XAMPP Control Panel** e clique em **"Start"** nas opções **Apache** e **MySQL**. Ambos devem ficar com o fundo verde.
 3. Abra o seu navegador de internet e acesse: `http://localhost/phpmyadmin/`.
 4. Clique na aba **"SQL"** no menu superior, cole o script abaixo e clique em **Executar**:
+
+
+
    ```sql
-
-
-
-
+   -- =======================================================
 -- 1. LIMPEZA E CRIAÇÃO DO BANCO DE DADOS
 -- =======================================================
 DROP DATABASE IF EXISTS plataforma_cursos;
@@ -93,3 +93,7 @@ INSERT INTO alunos (nome, email, curso_id) VALUES
 ('Gabriel Ramos', 'gabriel.ramos@email.com', 1),
 ('Amanda Lima', 'amanda.lima@email.com', 3),
 ('Roberto Alves', 'roberto.alves@email.com', NULL);
+
+
+
+
