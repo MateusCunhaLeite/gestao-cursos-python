@@ -34,16 +34,12 @@ Siga o passo a passo abaixo para preparar o ambiente e rodar o projeto no seu co
 
 
    ```sql
-   -- =======================================================
--- 1. LIMPEZA E CRIAÇÃO DO BANCO DE DADOS
--- =======================================================
+   
 DROP DATABASE IF EXISTS plataforma_cursos;
 CREATE DATABASE plataforma_cursos;
 USE plataforma_cursos;
 
--- =======================================================
--- 2. CRIAÇÃO DAS TABELAS
--- =======================================================
+
 
 -- Tabela de Cursos (Independente)
 CREATE TABLE cursos (
@@ -70,9 +66,7 @@ CREATE TABLE alunos (
     FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE SET NULL
 );
 
--- =======================================================
--- 3. INSERÇÃO DE DADOS (INSERTS DE TESTE)
--- =======================================================
+
 
 -- Inserindo Cursos
 INSERT INTO cursos (nome, categoria, carga_horaria) VALUES 
@@ -93,6 +87,7 @@ INSERT INTO alunos (nome, email, curso_id) VALUES
 ('Gabriel Ramos', 'gabriel.ramos@email.com', 1),
 ('Amanda Lima', 'amanda.lima@email.com', 3),
 ('Roberto Alves', 'roberto.alves@email.com', NULL);
+   -- =======================================================
 
 
 
