@@ -34,7 +34,6 @@ Siga o passo a passo abaixo para preparar o ambiente e rodar o projeto no seu co
 
 
    ```sql
-   
 DROP DATABASE IF EXISTS plataforma_cursos;
 CREATE DATABASE plataforma_cursos;
 USE plataforma_cursos;
@@ -87,7 +86,8 @@ INSERT INTO alunos (nome, email, curso_id) VALUES
 ('Gabriel Ramos', 'gabriel.ramos@email.com', 1),
 ('Amanda Lima', 'amanda.lima@email.com', 3),
 ('Roberto Alves', 'roberto.alves@email.com', NULL);
-   -- =======================================================
+   
+
 
 
 
